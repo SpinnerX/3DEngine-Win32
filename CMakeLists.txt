@@ -3,6 +3,11 @@ cmake_minimum_required(VERSION 3.29)
 set(PROJECT_NAME 3DEngine)
 project(${PROJECT_NAME} VERSION 0.1.0 LANGUAGES C CXX)
 set(CMAKE_CXX_STANDARD 20)
+
+# cmake -DCMAKE_CXX_COMPILER=g++ -DCMAKE_CC_COMPILER=gcc -DCMAKE_MAKE_PROGRAM=make ..
+# set(CMAKE_CXX_COMPILER g++)
+# set(CMAKE_MAKE_PROGRAM make)
+
 # add_compile_options(-fsanitize=address)
 # add_link_options(-fsanitize=address)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "") # works (in creating the compile_commands.json file)
@@ -59,10 +64,11 @@ add_subdirectory(external/ImGuizmo)
 endif(WIN32)
 
 # find_package(glfw3 REQUIRED)
-
-add_executable(
-    ${PROJECT_NAME} main.cpp ${BOX2D_SOURCE}
-)
+add_subdirectory(Sandbox)
+add_subdirectory(Editor)
+# add_executable(
+#     ${PROJECT_NAME} main.cpp ${BOX2D_SOURCE}
+# )
 
 if(WIN32)
 target_link_libraries(
