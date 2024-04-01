@@ -1,7 +1,6 @@
-#include <iostream>
-using namespace std;
+#include <3DEngine/Core/EntryPoint.h>
 
-int main(int argc, char* argv){
-    printf("Testing!");
-    return 0;
-}
+class MyApplication{
+public:
+    MyApplication() = default;
+};

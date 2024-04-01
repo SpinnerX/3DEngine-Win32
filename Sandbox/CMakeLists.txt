@@ -1,19 +1,48 @@
-# cmake_minimum_required (VERSION 3.27)
+set(PROJECT_NAME Sandbox)
 
+project(${PROJECT_NAME})
 set(CMAKE_CXX_STANDARD 20)
 
-# Create the executable
-add_executable(3DEngine Application.cpp)
+include_directories(
+    ../3DEngine
+    ../3DEngine/Core
+)
 
-# @note This is to move the assets into our binary directory
-# file(COPY assets DESTINATION ${CMAKE_BINARY_DIR})
+# set(CMAKE_PREFIX_PATH "C:\\Program Files (x86)\\3DEngine\\lib\\cmake")
 
-# Link the static library from subproject1 using its alias sub::lib1
-# Link the header only library from subproject2 using its alias sub::lib2
-# This will cause the include directories for that target to be added to this project
+# set(imgui_DIR "C:\\Program Files (x86)\\3DEngine\\lib\\cmake\\imgui")
+# set(fmt_DIR "C:\\Program Files (x86)\\3DEngine\\libcmake\\fmt")
+set(spdlog_DIR "C:\\Program Files (x86)\\3DEngine\\libcmake\\spdlog")
+# find_package(spdlog REQUIRED)
+# find_package(fmt REQUIRED)
+# find_package(imgui REQUIRED)
+# find_package(ImGuizmo REQUIRED)
+# find_package(fmt REQUIRED)
+# find_package(spdlog REQUIRED)
+# find_package(imgui REQUIRED)
+# find_package(ImGuizmo REQUIRED)
+# find_package(3DEngine REQUIRED)
 
-# Log::Log1 is the alias we made when we created an alias in the Logger CMakeLists.txt file
-# target_link_libraries(
-#     ${PROJECT_NAME}
-# 	Engine3D::Engine3D
-# )
+add_executable(${PROJECT_NAME} Application.cpp)
+
+target_link_libraries(
+    ${PROJECT_NAME} PUBLIC
+    3DEngine
+    glfw
+    ${Vulkan_LIBRARIES}
+    fmt
+    spdlog
+    glm
+    tobanteGaming::Box2D
+    yaml-cpp
+)
+
+target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR})
+
+# add_custom_command(
+#         TARGET Sandbox POST_BUILD
+#         COMMAND ${CMAKE_COMMAND} -E copy_directory
+#                 ${CMAKE_CURRENT_SOURCE_DIR}/data/
+#                 ${CMAKE_CURRENT_BINARY_DIR}/data/)
+
+# source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${TESTBED_SOURCE_FILES})
