@@ -8,6 +8,11 @@ set(CMAKE_CXX_STANDARD 20)
 # set(CMAKE_CXX_COMPILER g++)
 # set(CMAKE_MAKE_PROGRAM make)
 
+option(ENGINE_BUILD_UNIT_TESTS "Build the GameEngine unit tests" ON)
+option(ENGINE_BUILD_SANDBOX "Build the GameEngine testbed" ON)
+option(ENGINE_BUILD_DOCS "Build the GameEngine documentation" OFF)
+option(ENGINE_USER_SETTINGS "Override GameEngine settings with GameEngineUserSettings.h" OFF)
+
 # add_compile_options(-fsanitize=address)
 # add_link_options(-fsanitize=address)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "") # works (in creating the compile_commands.json file)
@@ -18,10 +23,11 @@ set(VULKAN_ROOT "C:\\VulkanSDK\\1.3.280.0")
 include_directories("${VULKAN_ROOT}\\Include")
 list(APPEND CMAKE_PREFIX_PATH "C:\\VulkanSDK\\1.3.280.0\\Bin")
 
-find_package(Vulkan REQUIRED)
+include(CMakeFindDependencyMacro)
+find_dependency(Vulkan REQUIRED)
 
 
-find_package( OpenGL REQUIRED )
+find_dependency(OpenGL REQUIRED )
 
 include_directories( ${OPENGL_INCLUDE_DIRS} )
 
@@ -48,12 +54,12 @@ add_subdirectory(external/Box2D-cmake)
 # include_directories(external/fmt/include)
 
 include(FetchContent)
-# add_subdirectory(external/fmt)
-FetchContent_Declare(fmt
-  GIT_REPOSITORY https://github.com/fmtlib/fmt.git
-  GIT_TAG master
-)
-FetchContent_MakeAvailable(fmt)
+add_subdirectory(external/fmt)
+# FetchContent_Declare(fmt
+#   GIT_REPOSITORY https://github.com/fmtlib/fmt.git
+#   GIT_TAG master
+# )
+# FetchContent_MakeAvailable(fmt)
 
 add_subdirectory(external/spdlog)
 
@@ -63,16 +69,37 @@ add_subdirectory(external/ImGuizmo)
 
 endif(WIN32)
 
-# find_package(glfw3 REQUIRED)
-add_subdirectory(Sandbox)
-add_subdirectory(Editor)
+# find_dependency(glfw3 REQUIRED)
+# add_subdirectory(Sandbox)
+add_subdirectory(src)
+# add_subdirectory(Sandbox)
+# add_subdirectory(Editor)
 # add_executable(
 #     ${PROJECT_NAME} main.cpp ${BOX2D_SOURCE}
 # )
 
+# if (BOX2D_BUILD_TESTBED)
+# 	add_subdirectory(Sandbox)
+
+# 	# default startup project for Visual Studio
+# 	if (MSVC)
+# 		set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT testbed)
+# 		set_property(TARGET testbed PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/testbed")
+# 	endif()
+# endif()
+
+if (ENGINE_BUILD_SANDBOX)
+	add_subdirectory(Sandbox)
+
+	# default startup project for Visual Studio
+	if (MSVC)
+		set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Sandbox)
+		set_property(TARGET Sandbox PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/Sandbox")
+	endif()
+endif()
+
 if(WIN32)
-target_link_libraries(
-    ${PROJECT_NAME}
+target_link_libraries(${PROJECT_NAME}
     ${OPENGL_LIBRARIES}
     glfw
     ${Vulkan_LIBRARIES}
@@ -84,6 +111,7 @@ target_link_libraries(
     imgui
     ImGuizmo
 )
+endif(WIN32)
 
 # target_link_libraries( GLFW-CMake-starter ${OPENGL_LIBRARIES} glfw )
 if( MSVC )
@@ -93,4 +121,3 @@ if( MSVC )
         set_property( DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT GLFW-CMake-starter )
     endif()
 endif()
-endif(WIN32)
