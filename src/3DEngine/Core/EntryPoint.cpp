@@ -21,18 +21,20 @@ namespace Engine3D{
         return 0;
     }
 };
-
+#define WL_DIST
 #ifdef WL_DIST
 
 #include <Windows.h>
 
 int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline, int cmdshow)
 {
-	return Walnut::Main(__argc, __argv);
+	return Engine3D::Main(__argc, __argv);
 }
 #else
 int main(int argc, char** argv){
     Engine3D::EngineLogger::Init();
-    return Engine3D::Main(argc, argv);
+    Engine3D::Application* app = Engine3D::CreateApplication(argc, argv);
+    app->Run();
+    delete app;
 }
 #endif
