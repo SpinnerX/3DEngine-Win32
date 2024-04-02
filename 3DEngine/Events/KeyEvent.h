@@ -2,6 +2,7 @@
 #include <3DEngine/Core/core.h>
 #include <3DEngine/Events/Event.h>
 #include <3DEngine/Events/KeyCodes.h>
+#include <spdlog/spdlog.h>
 
 namespace Engine3D{
 

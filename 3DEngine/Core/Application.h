@@ -9,6 +9,7 @@
 #include <3DEngine/interfaces/Window.h>
 #include <3DEngine/Events/Event.h>
 #include <3DEngine/Events/AppEvent.h>
+#include <3DEngine/Core/LayerStack.h>
 
 struct GLFWwindow;
 namespace Engine3D{
@@ -24,7 +25,7 @@ namespace Engine3D{
         Application(const ApplicationSpecification& specification = ApplicationSpecification());
         ~Application();
 
-        static Application& Get();
+        static Application& Get() { return *instance; }
 
         void Run();
 
@@ -32,15 +33,16 @@ namespace Engine3D{
             _menuBarCallback = menuBarCallback;
         }
 
-        void pushLayer(Ref<Layer>& layer){
-            _layerStack.emplace_back(layer);
+        void pushLayer(Layer* layer){
+            layerStack.pushLayer(layer);
             layer->onAttach();
         }
 
         template<typename T>
         void pushLayer(){
             static_assert(std::is_base_of<Layer, T>::value, "Pushed type was not a layer");
-            _layerStack.emplace_back(Ref<T>())->onAttach();
+            // layerStack.emplace_back(Ref<T>())->onAttach();
+            layerStack.pushLayer(new T());
         }
         
         void close();
@@ -72,7 +74,8 @@ namespace Engine3D{
 		float m_FrameTime = 0.0f;
 		float m_LastFrameTime = 0.0f;
 
-        std::vector<std::shared_ptr<Layer>> _layerStack;
+        // std::vector<std::shared_ptr<Layer>> _layerStack;
+        LayerStack layerStack;
         std::function<void()> _menuBarCallback;
     };
 

@@ -1,9 +1,12 @@
 #pragma once
+#include <3DEngine/Core/core.h>
+#include <string>
 
 namespace Engine3D{
-    class Layer{
+    class ENGINE_API Layer{
     public:
-        virtual ~Layer() = default;
+        Layer(const std::string& name);
+        virtual ~Layer();
 
         virtual void onAttach(){}
 
@@ -12,5 +15,8 @@ namespace Engine3D{
         virtual void onUpdate(float ts){}
 
         virtual void onUIRender(){}
+
+    private:
+        std::string _debugName;
     };
 };

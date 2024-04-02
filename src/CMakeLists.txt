@@ -18,7 +18,10 @@ set(
     ../${INCLUDE_DIR}/Core/EngineLogger.h
     ../${INCLUDE_DIR}/Events/Event.h
     ../${INCLUDE_DIR}/Events/KeyEvent.h
+    ../${INCLUDE_DIR}/Events/MouseEvent.h
     ../${INCLUDE_DIR}/interfaces/Window.h
+    ../${INCLUDE_DIR}/Core/LayerStack.h
+    ../${INCLUDE_DIR}/Events/InputPoll.h
 
 
 )
@@ -31,6 +34,9 @@ set(
     ${INCLUDE_DIR}/Core/EngineLogger.cpp
     ${INCLUDE_DIR}/Events/Event.cpp
     ${INCLUDE_DIR}/interfaces/Window.cpp
+    ${INCLUDE_DIR}/Core/Layer.cpp
+    ${INCLUDE_DIR}/Core/LayerStack.cpp
+    ${INCLUDE_DIR}/Events/InputPoll.cpp
 )
 
 

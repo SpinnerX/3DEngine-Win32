@@ -17,6 +17,14 @@ namespace Engine3D{
 	void Application::Run(){
 		while(isRunning){
 
+			for(auto& layer : layerStack){
+				layer->onUpdate(0.f);
+			}
+
+			for(auto& layer : layerStack){
+				layer->onUIRender();
+			}
+
 			window->onUpdate();
 		}
 	}

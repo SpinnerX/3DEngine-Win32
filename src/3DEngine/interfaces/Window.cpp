@@ -41,6 +41,7 @@ namespace Engine3D{
             assert(false);
         }
 
+        //! @note Setting out current window properties until destroyed
         glfwSetWindowUserPointer(windowHandler, &properties);
         setVSync(true);
 
