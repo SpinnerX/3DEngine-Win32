@@ -12,12 +12,25 @@ set(
     ALL_HEADERS
     ../${INCLUDE_DIR}/Core/core.h
     ../${INCLUDE_DIR}/Core/EntryPoint.h
+    ../${INCLUDE_DIR}/Core/Layer.h
+    ../${INCLUDE_DIR}/Core/Timer.h
+    ../${INCLUDE_DIR}/Core/Random.h
+    ../${INCLUDE_DIR}/Core/EngineLogger.h
+    ../${INCLUDE_DIR}/Events/Event.h
+    ../${INCLUDE_DIR}/Events/KeyEvent.h
+    ../${INCLUDE_DIR}/interfaces/Window.h
+
+
 )
 
 set(
     ALL_SOURCES
     ${INCLUDE_DIR}/Core/Application.cpp
     ${INCLUDE_DIR}/Core/EntryPoint.cpp
+    ${INCLUDE_DIR}/ImGui/ImGuiBuild.cpp
+    ${INCLUDE_DIR}/Core/EngineLogger.cpp
+    ${INCLUDE_DIR}/Events/Event.cpp
+    ${INCLUDE_DIR}/interfaces/Window.cpp
 )
 
 

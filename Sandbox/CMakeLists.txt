@@ -35,6 +35,8 @@ target_link_libraries(
     glm
     tobanteGaming::Box2D
     yaml-cpp
+    imgui
+    ImGuizmo
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR})
