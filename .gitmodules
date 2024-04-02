@@ -5,10 +5,10 @@
 	path = external/box2d
 	url = https://github.com/erincatto/box2d
 [submodule "external/fmt"]
-	path = external/fmt,
+	path = external/fmt
 	url = https://github.com/fmtlib/fmt
 [submodule "external/glfw"]
-	path = external/glfw,
+	path = external/glfw
 	url = https://github.com/glfw/glfw
 [submodule "external/spdlog"]
 	path = external/spdlog
