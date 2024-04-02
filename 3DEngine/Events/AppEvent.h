@@ -10,13 +10,13 @@ namespace Engine3D{
 
         uint32_t getHeight() const { return height; }
 
-        EventType GetEventTypeImpl() { return GetStaticType(); }
+        EventType GetEventType() const override { return GetStaticType(); }
 
-        const char* GetNameImpl(){
+        const char* GetName() const override {
             return "EventType::WindowResize";
         }
 
-        std::string toStringImpl() const override {
+        std::string toString() const {
             std::stringstream ss;
             ss << "WindowResizedEvent: " << width << ", " << height;
             return ss.str();
@@ -24,7 +24,7 @@ namespace Engine3D{
 
         static EventType GetStaticType() { return EventType::WindowResize; }
 
-        int GetCategoryFlagsImpl() const override{
+        int GetCategoryFlags() const override{
             return EventCategoryApp;
         }
 
@@ -42,15 +42,15 @@ namespace Engine3D{
 
         static EventType GetStaticType() { return EventType::WindowClose; }
 
-        EventType GetEventTypeImpl() const override {
+        EventType GetEventType() const override {
             return GetStaticType();
         }
 
-        const char* GetNameImpl() const override {
+        const char* GetName() const override {
             return "EventType::WindowClose";
         }
 
-        int GetCategoryFlagsImpl() const override {
+        int GetCategoryFlags() const override {
             return EventCategoryApp;
         }
     };

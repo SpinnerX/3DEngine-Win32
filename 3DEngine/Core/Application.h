@@ -10,7 +10,6 @@
 #include <3DEngine/Events/Event.h>
 #include <3DEngine/Events/AppEvent.h>
 
-void check_vk_result(VkResult err);
 struct GLFWwindow;
 namespace Engine3D{
 
@@ -46,7 +45,7 @@ namespace Engine3D{
         
         void close();
 
-        float getTime();
+        // float getTime();
 
         GLFWwindow* getNativeWindow() const { return (GLFWwindow *)window->getNativeWindow(); }
 
@@ -57,14 +56,9 @@ namespace Engine3D{
 		// static VkCommandBuffer GetCommandBuffer(bool begin);
 		// static void FlushCommandBuffer(VkCommandBuffer commandBuffer);
 
-        static void submitResourceFree(std::function<void()>&& func);
+        // static void submitResourceFree(std::function<void()>&& func);
 
         void onEvent(Event& event);
-
-    private:
-        void init();
-
-        void shutdown();
 
     private:
         bool onWindowClose(WindowClosedEvent& e);

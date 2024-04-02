@@ -7,12 +7,9 @@ namespace Engine3D{
 
     class ENGINE_API KeyEvent : public Event{
     public:
-        inline KeyCode GetKeyCode() { return GetKeyCodeImpl(); }
 
-        inline int GetCategoryFlags() const { return GetCategoryFlagsImpl(); }
-    private:
-        inline virtual KeyCode GetKeyCodeImpl() const { return keycode; }
-        inline int GetCategoryFlagsImpl() const override { return EventCategoryKeyboard | EventCategoryInput; }
+        inline virtual KeyCode GetKeyCode() const { return keycode; }
+        inline int GetCategoryFlags() const override { return EventCategoryKeyboard | EventCategoryInput; }
 
     protected:
 
@@ -27,7 +24,7 @@ namespace Engine3D{
 
         inline int GetRepeatedCount() const { return isRepeatedCount; }
 
-        std::string toStringImpl() const override {
+        std::string toString() const {
             std::stringstream ss;
             ss << fmt::format("KeyPressedEvent: {} ({} repeats)", static_cast<int32_t>(keycode), isRepeatedCount);
             return ss.str();
@@ -35,8 +32,8 @@ namespace Engine3D{
 
         static EventType GetStaticType() { return EventType::KeyPressed; }
 
-        EventType GetEventType() const { return GetStaticType(); }
-        const char* GetName() const { return GetNameImpl(); }
+        EventType GetEventType() const override { return GetStaticType(); }
+        const char* GetName() const override { return GetNameImpl(); }
 
     private:
         const char* GetNameImpl() const { return "EventType::KeyPressed"; }
@@ -53,10 +50,10 @@ namespace Engine3D{
         static EventType GetStaticType() { return EventType::KeyReleased; }
 
         // We need another instance of it, so we know what the actual event type it is.
-        EventType GetEventType() const { return GetStaticType(); }
-        const char* GetName() const { return "EventType::Released"; }
+        EventType GetEventType() const override { return GetStaticType(); }
+        const char* GetName() const override { return "EventType::Released"; }
 
-        std::string toString() const{
+        std::string toString() const {
             std::stringstream ss;
             ss << fmt::format("KeyTypedEvent: {}", static_cast<int32_t>(keycode));
             return ss.str();
@@ -69,11 +66,11 @@ namespace Engine3D{
 
         static EventType GetStaticType() { return EventType::KeyTyped; }
 
-        EventType GetEventType() { return GetStaticType(); }
+        EventType GetEventType() const override { return GetStaticType(); }
 
-        const char* GetName() const { return "EventType::KeyTyped"; }
+        const char* GetName() const override { return "EventType::KeyTyped"; }
 
-        std::string toStrign() const{
+        std::string toString() const {
             std::stringstream ss;
             ss << fmt::format("KeyTypedEvent: {}", static_cast<int32_t>(keycode));
             return ss.str();

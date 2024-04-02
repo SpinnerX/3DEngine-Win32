@@ -30,9 +30,10 @@ namespace Engine3D{
         friend class EventDispatcher;
     public:
         bool isEventCurrentlyHandled() const;
-        EventType GetEventType() const;
-        const char* GetName() const;
-        int GetCategoryFlags() const;
+        void setEventCurrentlyHandled(bool value) { isHandled = value; }
+        virtual EventType GetEventType() const = 0;
+        virtual const char* GetName() const = 0;
+        virtual int GetCategoryFlags() const = 0;
 
         inline bool isInCategory(EventCategory category);
 
@@ -44,17 +45,11 @@ namespace Engine3D{
 
         //! @note Reason for this is that if the event we pass in does not occur
         //! @note Will help us for signal to the dispatcher if that event has happened or not.
-        template<typename T>
-        bool operator=(std::function<bool(T&)> func){
-            int handled = func();
-            return handled;
-        }
-
-    private:
-        virtual EventType GetEventTypeImpl() const {};
-        virtual const char* GetNameImpl() const {};
-        virtual std::string toStringImpl() const {};
-        virtual int GetCategoryFlagsImpl() const {};
+        // template<typename T>
+        // Event& operator=(std::function<bool(T&)> func){
+        //     this->isHandled = func();
+        //     return *this;
+        // }
 
         //! @note Checking if an event has been handled or not.
         //! @note Specifially for when we are handling events in the dispatcher.
@@ -82,14 +77,16 @@ namespace Engine3D{
         template<typename T>
         bool Dispatch(EventFunction<T> func){
             //! @note Must be a valid event passed into this function
-            if(std::is_base_of<Event, T>()){
-                static_assert(false, "In Dispatch<T> is not given an event type!");
+            if(std::is_base_of<T, Event>()){
+                printf("Could not dispatch that event!");
+                std::terminate();
+                // static_assert(false, "In Dispatch<T> is not given an event type!");
             }
 
             //! @note Checking if current event specified is a valid event type returned 
             //! @note An example is we could be passing in an event that may not even be valid.
             if(_event.GetEventType() == T::GetStaticType()){
-                _event = func(*(T *)&_event);
+                _event.setEventCurrentlyHandled(func(*(T *)&_event));
                 return true;
             }
 

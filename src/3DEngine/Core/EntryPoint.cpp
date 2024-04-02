@@ -8,25 +8,17 @@ bool _applicationRunning = true;
 
 namespace Engine3D{
     int Main(int argc, char** argv){
-        // while(_applicationRunning){
-        //     Engine3D::Application* app = Engine3D::CreateApplication(argc, argv);
-		// 	app->Run();
-		// 	delete app;
-        // }
         Engine3D::Application* app = Engine3D::CreateApplication(argc, argv);
         app->Run();
-        // Engine3D::Application* app = Engine3D::CreateApplication(argc, argv);
-        // app->Run();
         delete app;
         return 0;
     }
 };
-#define WL_DIST
 #ifdef WL_DIST
 
 #include <Windows.h>
 
-int APIENTRY WinMain(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline, int cmdshow)
+int APIENTRY main(HINSTANCE hInst, HINSTANCE hInstPrev, PSTR cmdline, int cmdshow)
 {
 	return Engine3D::Main(__argc, __argv);
 }

@@ -29,12 +29,20 @@ namespace Engine3D{
             assert(false);
         }
 
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, true);
+
         windowHandler = glfwCreateWindow(properties.width, properties.height, properties.title.c_str(), nullptr, nullptr);
 
         if(!windowHandler){
             coreLogError("GLFWwindow* Failed!");
             assert(false);
         }
+
+        glfwSetWindowUserPointer(windowHandler, &properties);
+        setVSync(true);
 
         // This is creating a WindowResizeEvent callback
         glfwSetWindowSizeCallback(windowHandler, [](GLFWwindow* window, int w, int h){
