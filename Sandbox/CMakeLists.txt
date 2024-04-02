@@ -12,7 +12,7 @@ include_directories(
 
 # set(imgui_DIR "C:\\Program Files (x86)\\3DEngine\\lib\\cmake\\imgui")
 # set(fmt_DIR "C:\\Program Files (x86)\\3DEngine\\libcmake\\fmt")
-set(spdlog_DIR "C:\\Program Files (x86)\\3DEngine\\libcmake\\spdlog")
+# set(spdlog_DIR "C:\\Program Files (x86)\\3DEngine\\libcmake\\spdlog")
 # find_package(spdlog REQUIRED)
 # find_package(fmt REQUIRED)
 # find_package(imgui REQUIRED)
@@ -29,7 +29,7 @@ target_link_libraries(
     ${PROJECT_NAME} PUBLIC
     3DEngine
     glfw
-    ${Vulkan_LIBRARIES}
+    # ${Vulkan_LIBRARIES}
     fmt
     spdlog
     glm

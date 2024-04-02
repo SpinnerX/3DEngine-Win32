@@ -23,5 +23,5 @@
 	path = external/imgui,
 	url = https://github.com/SpinnerX/imgui
 [submodule "external/ImGuizmo"]
-	path = external/ImGuizmo,
+	path = external/ImGuizmo
 	url = https://github.com/SpinnerX/ImGuizmo
