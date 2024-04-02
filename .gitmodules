@@ -21,7 +21,7 @@
 	url = https://github.com/icaven/glm
 [submodule "external/imgui"]
 	path = external/imgui
-	url = .\external\imgui
+	url = https://github.com/SpinnerX/imgui
 [submodule "external/ImGuizmo"]
 	path = external/ImGuizmo
-	url = .\external\ImGuizmo
+	url = https://github.com/SpinnerX/ImGuizmo
