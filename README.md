@@ -1,6 +1,9 @@
 # 3DEngine-Win32
 Engine3D port to Windows
 
+# Prereq Installation
+* If you already have this installed, then continue to building the project.
+* Make sure you have git, and C++ installed first.
 
 ## Windows Installation
 * Make sure to install CMake, and have C++ installed on your machine before building the project. \
@@ -14,6 +17,12 @@ Engine3D port to Windows
 * To install the dependencies on a Linux machine just run the `setup.sh` script. \
 * This setup script will install all of the dependencies that are required.
 * The linux script will also install vulkan.
+
+# Cloning the Repository
+* To git clone simply do the following \
+1.) `git clone https://github.com/SpinnerX/3DEngine-Win32` \
+2.) `git submodule update --init --recursive`
+
 
 # How to Build the Project
 * If you try to recompile with simply `cmake ..` (note this is if you create build dir and your inside it) \
