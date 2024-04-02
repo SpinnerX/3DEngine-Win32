@@ -15,11 +15,13 @@ Engine3D port to Windows
 * This setup script will install all of the dependencies that are required.
 * The linux script will also install vulkan.
 
-## Running CMake
+# How to Build the Project
 * If you try to recompile with simply `cmake ..` (note this is if you create build dir and your inside it) \
 * Or if you are outside it then you do `cmake --build build` \
 * If these do not work and you get some error, run the second command below. (If it doesn't compile)
 
-* To set the build type, simply do: `cmake -DCMAKE_BUILD_TYPE=Release ..` (if your in build dir, if not in build dir just do '.')
+1.) Create Build dir by doing `cmake -S . -B build` \
+2.) Do `cmake --build build` and if you get an error then do the following in part 3. \
+3.) Then compile by doing `cmake -DCMAKE_CXX_COMPILER=g++ -DCMAKE_CC_COMPILER=gcc -DCMAKE_MAKE_PROGRAM=make --build build`
 
-* Or do this if that does not work, `cmake -DCMAKE_CXX_COMPILER=g++ -DCMAKE_CC_COMPILER=gcc -DCMAKE_MAKE_PROGRAM=make ..`
+* To specify the build type do, `cmake -DCMAKE_BUILD_TYPE=Release ..` (if your in build dir, if not in build dir just do '.')
