@@ -6,6 +6,12 @@ Engine3D port to Windows
 * Make sure you have git, and C++ installed first, and also MAKE SURE CMake is installed as well.
 * Set the PATH environmental variables to the cmake path where you installed it.
 
+## Installing and Compiling C++ and CMake (Windows Edition)
+* Follow this link's instruction, `https://medium.com/@ahmetekiz/how-to-compile-c-in-vscode-on-windows-11-11518b471c68`
+* This link is to install C++ and allow to install it's toolchain. (C++, Make, etc.)
+* Next install CMake, by going to this link, `https://cmake.org/download/`
+
+
 ## Windows Installation
 * Make sure to install CMake, and have C++ installed on your machine before building the project.
 * If C++ is not installed already then go to this link, `https://www.msys2.org/`
@@ -20,9 +26,7 @@ Engine3D port to Windows
 * The linux script will also install vulkan.
 
 # Cloning the Repository
-* To git clone simply do the following \
-1.) `git clone https://github.com/SpinnerX/3DEngine-Win32` \
-2.) `git submodule update --init --recursive`
+* To git clone simply do the following, `git clone --recurse-submodules -j8 https://github.com/SpinnerX/3DEngine-Win32`
 
 
 # How to Build the Project

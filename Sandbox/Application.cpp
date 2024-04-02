@@ -21,18 +21,20 @@ public:
 	}
 
 	virtual void onUIRender() override{
-		printf("Running onUIRender()!\n");
-		ImGui::Begin("Hello");
-		ImGui::Button("Button");
-		ImGui::End();
+		// printf("Running onUIRender()!\n");
+		// ImGui::Begin("Hello");
+		// ImGui::Button("Button");
+		// ImGui::End();
 
-		ImGui::ShowDemoWindow();
+		// ImGui::ShowDemoWindow();
 	}
 };
 
 Engine3D::Application* Engine3D::CreateApplication(int argc, char** argv){
 	Engine3D::ApplicationSpecification spec;
 	spec.name = "Engine3D Example";
+	spec.width = 1900;
+	spec.height = 900;
 
 	Engine3D::Application* app = new Engine3D::Application(spec);
 	// app->pushLayer<ExampleLayer>();
