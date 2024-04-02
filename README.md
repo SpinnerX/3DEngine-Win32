@@ -3,7 +3,8 @@ Engine3D port to Windows
 
 # Prereq Installation
 * If you already have this installed, then continue to building the project.
-* Make sure you have git, and C++ installed first.
+* Make sure you have git, and C++ installed first, and also MAKE SURE CMake is installed as well.
+* Set the PATH environmental variables to the cmake path where you installed it.
 
 ## Windows Installation
 * Make sure to install CMake, and have C++ installed on your machine before building the project.
