@@ -7,6 +7,7 @@ set(CMAKE_CXX_STANDARD 20)
 # cmake -DCMAKE_CXX_COMPILER=g++ -DCMAKE_CC_COMPILER=gcc -DCMAKE_MAKE_PROGRAM=make ..
 # set(CMAKE_CXX_COMPILER g++)
 # set(CMAKE_MAKE_PROGRAM make)
+# set(CMAKE_CXX_COMPILER "C:\\msys64\\clang64.exe")
 
 option(ENGINE_BUILD_UNIT_TESTS "Build the GameEngine unit tests" ON)
 option(ENGINE_BUILD_SANDBOX "Build the GameEngine testbed" ON)
@@ -19,15 +20,15 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "") # works (in creating the
 
 if(WIN32)
 set(VULKAN_ROOT "C:\\VulkanSDK\\1.3.280.0")
-
+set(VULKAN_INCLUDE "${VULKAN_ROOT}\\Include")
 
 if (EXISTS ${VULKAN_ROOT})
-include_directories("${VULKAN_ROOT}\\Include")
+include_directories(${VULKAN_INCLUDE})
 list(APPEND CMAKE_PREFIX_PATH "C:\\VulkanSDK\\1.3.280.0\\Bin")
 endif()
 
 include(CMakeFindDependencyMacro)
-find_dependency(Vulkan REQUIRED)
+find_package(Vulkan REQUIRED)
 
 
 find_dependency(OpenGL REQUIRED )
@@ -75,6 +76,11 @@ endif(WIN32)
 # find_dependency(glfw3 REQUIRED)
 # add_subdirectory(Sandbox)
 add_subdirectory(src)
+install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION .\\build\\bin)
+include(CPack)
+
+set(CPACK_GENERATOR WIX)
+
 # add_subdirectory(Sandbox)
 # add_subdirectory(Editor)
 # add_executable(
@@ -102,7 +108,7 @@ if (ENGINE_BUILD_SANDBOX)
 endif()
 
 if(WIN32)
-if(EXISTS ${VULKAN_ROOT})
+
 target_link_libraries(${PROJECT_NAME}
     ${OPENGL_LIBRARIES}
     glfw
@@ -115,20 +121,6 @@ target_link_libraries(${PROJECT_NAME}
     imgui
     ImGuizmo
 )
-else()
-target_link_libraries(${PROJECT_NAME}
-    ${OPENGL_LIBRARIES}
-    glfw
-    ${Vulkan_LIBRARIES}
-    fmt::fmt
-    spdlog::spdlog
-    glm::glm
-    tobanteGaming::Box2D
-    yaml-cpp::yaml-cpp
-    imgui
-    ImGuizmo
-)
-endif()
 endif(WIN32)
 
 # target_link_libraries( GLFW-CMake-starter ${OPENGL_LIBRARIES} glfw )

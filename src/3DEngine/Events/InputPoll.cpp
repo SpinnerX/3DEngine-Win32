@@ -3,41 +3,37 @@
 #include <GLFW/glfw3.h>
 
 namespace Engine3D{
-	InputPoll* InputPoll::instance = new InputPoll();
-
-	bool InputPoll::isKeyPressedImpl(Key keycode){
-		auto window = static_cast<GLFWwindow *>(Application::Get().getNativeWindow());
-
-		auto state = glfwGetKey(window, static_cast<int32_t>(keycode));
+	bool InputPoll::isKeyPressed(KeyCode keycode){
+		GLFWwindow* windowHandle = static_cast<GLFWwindow *>(Application::Get().getNativeWindow());
+		int state = glfwGetKey(windowHandle, (int)keycode);
 
 		return state == GLFW_PRESS || state == GLFW_REPEAT;
 	}
-
-	bool InputPoll::isMouseButtonPressedImpl(Mouse button){
-		auto window = static_cast<GLFWwindow *>(Application::Get().getNativeWindow());
-
-		auto state = glfwGetMouseButton(window, static_cast<int32_t>(button));
-
+		
+	bool InputPoll::isMouseButtonPressed(Engine3D::Mouse button){
+		GLFWwindow* windowHandle = static_cast<GLFWwindow *>(Application::Get().getNativeWindow());
+		int state = glfwGetMouseButton(windowHandle, (int)button);
 		return state == GLFW_PRESS;
 	}
 
-	float InputPoll::getMouseXImpl(){
-		// auto[x, y] = getMousePositionImpl();
-		return getMousePositionImpl().x;
+	void InputPoll::setCursorMode(CursorMode mode){
+		GLFWwindow* windowHandle = static_cast<GLFWwindow *>(Application::Get().getNativeWindow());
+		glfwSetInputMode(windowHandle, GLFW_CURSOR, GLFW_CURSOR_NORMAL + (int)mode);
 	}
 
-	float InputPoll::getMouseYImpl(){
-		// auto[x, y] = getMousePositionImpl();
-		return getMousePositionImpl().y;
+	glm::vec2 InputPoll::getMousePosition(){
+		GLFWwindow* windowHandle = static_cast<GLFWwindow *>(Application::Get().getNativeWindow());
+		
+		double x, y;
+		glfwGetCursorPos(windowHandle, &x, &y);
+		return {x, y};
+	}
+	
+	float InputPoll::getMouseX(){
+		return getMousePosition().x;
 	}
 
-	glm::vec2 InputPoll::getMousePositionImpl(){
-		auto window = static_cast<GLFWwindow *>(Application::Get().getNativeWindow());
-
-		double xpos, ypos;
-		glfwGetCursorPos(window, &xpos, &ypos);
-
-		glm::vec2 position = {(float)xpos, (float)ypos};
-		return position;
+	float InputPoll::getMouseY(){
+		return getMousePosition().y;
 	}
 };

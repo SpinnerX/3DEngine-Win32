@@ -3,72 +3,73 @@
 #include <string>
 #include <functional>
 #include <3DEngine/Events/Event.h>
-#include <optional>
+#include <3DEngine/Core/LayerStack.h>
 
 class GLFWwindow;
-
 namespace Engine3D{
-    //! @note Setting the window properties to their default state
     struct WindowProperties{
         using EventCallbackFunc = std::function<void(Event& event)>;
-        std::string title = "Engine3D";
-        uint32_t width=1900, height=900;
-        bool isVSyncEnabled = false;
+        WindowProperties(const std::string& name = "Engine3D", uint32_t w = 1600, uint32_t h = 900) : title(name), width(w), height(h) {}
+
+        std::string title;
+        uint32_t width, height;
+        bool isVSyncEnabled = false; //! @note vsync is default to disabled.
         EventCallbackFunc callback;
     };
 
-    /*!
-        @class Window
-        @note Used to interface with different rendering API's such as Vulkan or DirectX.
-        @note Utilizing OpenGL's windowing system.
-
-        @function Window::get()
-        @note Extracts our windows instance
-        @note We should only have one window instance
-        @note Then how we handle games will vary on various layers.
-
-        @function Window::getNativeWindow()
-        @note Used for getting whatever native window that we specify.
+    /**
+     * @name Window
+     * @note Will have different implementations
+     * @note 
+     * 
+     * 
+     * 
     */
-    class Window{
-        using EventCallbackFn = WindowProperties::EventCallbackFunc;
+    class ENGINE_API Window{
+        Window(const WindowProperties& properties);
     public:
-        Window(const WindowProperties& properties = WindowProperties());
-        virtual ~Window();
+        using EventCallbackFn = WindowProperties::EventCallbackFunc;
 
-        static Window* create(std::string title="Engine3D", uint32_t w=1900, uint32_t h=900);
+        ~Window();
 
-        virtual void* getNativeWindow();
-
+        //! @note Updating our window instance.
         void onUpdate();
 
-        static Window& get();
+        //! @note updating out events being handled.
+        void onEvent(Event& event);
 
-        bool getVSync() const;
-        void setVSync(bool enabled);
+        uint32_t getWidth() const { return properties.width; }
 
-        virtual uint32_t getWidth() const { return properties.width; };
-        virtual uint32_t getHeight() const { return properties.height; };
+        uint32_t getHeight() const { return properties.height; }
 
-        void setEventCallback(EventCallbackFn callback){ properties.callback = callback; }
+        void* getNativeWindow() const { return windowHandler; }
 
+        static Window* create(const WindowProperties& properties = WindowProperties());
+        bool isWindowClosing();
+        void setEventCallback(EventCallbackFn fn) { properties.callback = fn;}
+
+        template<typename T>
+        void pushLayer(){
+            static_assert(std::is_base_of<Layer, T>::value, "Is not a layer type!");
+
+            T* layer = new T();
+            layer->onAttach();
+            layerStack.pushLayer(layer);
+        }
+    private:
+        //! @note Initializing our core API's
+        void initializeCore();
+
+        //! @note Helper function to make sure we close our application cleanly.
+        void shutdown();
 
     private:
-        /**
-         * @function initializeCore()
-         * @note Used for cleanly initializing our windowing system
-         * 
-         * @functoin shutdownCleanup()
-         * @note Handling cleanly ending out application (window cleanup, essentially)
-        */
-        void initializeWindowCore();
-
-        void shutdownCleanup();
+        void setup();
 
     private:
-        GLFWwindow* windowHandler = nullptr;
+        GLFWwindow* windowHandler;
         WindowProperties properties;
         static Window* instance;
-        // std::function<void(Event& event)> callback;
+        LayerStack layerStack;
     };
 };

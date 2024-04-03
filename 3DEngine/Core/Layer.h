@@ -1,6 +1,7 @@
 #pragma once
 #include <3DEngine/Core/core.h>
 #include <string>
+#include <3DEngine/Events/Event.h>
 
 namespace Engine3D{
     class ENGINE_API Layer{
@@ -11,6 +12,8 @@ namespace Engine3D{
         virtual void onAttach(){}
 
         virtual void onDetach(){}
+
+        virtual void onEvent(Event& event) {}
 
         virtual void onUpdate(float ts){}
 

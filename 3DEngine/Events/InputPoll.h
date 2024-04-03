@@ -1,42 +1,24 @@
 #pragma once
 #include <3DEngine/Core/core.h>
 #include <glm/glm.hpp>
-#include <3DEngine/Events/KeyEvent.h>
-#include <3DEngine/Events/MouseEvent.h>
+#include <Events/KeyEvent.h>
+#include <Events/MouseButtonCodes.h>
+#include <Events/CursorCodes.h>
 
 namespace Engine3D{
     class ENGINE_API InputPoll{
 	public:
 
-        inline static bool isKeyPressed(KeyCode keycode){
-			return instance->isKeyPressedImpl(keycode);
-		}
+        static bool isKeyPressed(KeyCode keycode);
 		
-		inline static bool isMouseButtonPressed(Mouse button){
-			return instance->isMouseButtonPressedImpl(button);
-		}
+		static bool isMouseButtonPressed(Engine3D::Mouse button);
 
-		inline static glm::vec2 getMousePosition(){
-			return instance->getMousePositionImpl();
-		}
+		static glm::vec2 getMousePosition();
 		
-		inline static float getMouseX(){
-			return instance->getMouseXImpl();
-		}
+		static float getMouseX();
 
-		inline static float getMouseY(){
-			return instance->getMouseYImpl();
-		}
+		static float getMouseY();
 
-	protected:
-		bool isKeyPressedImpl(Key keycode);
-		bool isMouseButtonPressedImpl(Mouse button);
-		glm::vec2 getMousePositionImpl();
-		
-		float getMouseXImpl();
-		float getMouseYImpl();
-
-    private:
-        static InputPoll* instance;
+		static void setCursorMode(CursorMode code);
     };
 };

@@ -6,6 +6,7 @@ set(
 include_directories(
 	${INCLUDE_DIR}
 	../
+  ${INCLUDE_DIR}/3DEngine/platforms
 )
 
 set(
@@ -14,6 +15,7 @@ set(
     ../${INCLUDE_DIR}/Core/EntryPoint.h
     ../${INCLUDE_DIR}/Core/Layer.h
     ../${INCLUDE_DIR}/Core/Timer.h
+    ../${INCLUDE_DIR}/Core/Timestep.h
     ../${INCLUDE_DIR}/Core/Random.h
     ../${INCLUDE_DIR}/Core/EngineLogger.h
     ../${INCLUDE_DIR}/Events/Event.h
@@ -22,6 +24,8 @@ set(
     ../${INCLUDE_DIR}/interfaces/Window.h
     ../${INCLUDE_DIR}/Core/LayerStack.h
     ../${INCLUDE_DIR}/Events/InputPoll.h
+  ../${INCLUDE_DIR}/Events/KeyCodes.h
+  ../${INCLUDE_DIR}/Events/MouseButtonCodes.h
 
 
 )
@@ -33,14 +37,15 @@ set(
     ${INCLUDE_DIR}/ImGui/ImGuiBuild.cpp
     ${INCLUDE_DIR}/Core/EngineLogger.cpp
     ${INCLUDE_DIR}/Events/Event.cpp
-    ${INCLUDE_DIR}/interfaces/Window.cpp
+    # ${INCLUDE_DIR}/interfaces/Window.cpp
+    ${INCLUDE_DIR}/platforms/Vulkan/VulkanWindow.cpp
     ${INCLUDE_DIR}/Core/Layer.cpp
     ${INCLUDE_DIR}/Core/LayerStack.cpp
     ${INCLUDE_DIR}/Events/InputPoll.cpp
 )
 
 
-add_library(${PROJECT_NAME} ${ALL_SOURCES} ${ALL_HEADERS})
+add_library(${PROJECT_NAME} STATIC ${ALL_SOURCES} ${ALL_HEADERS})
 
 target_include_directories(${PROJECT_NAME}
   PUBLIC

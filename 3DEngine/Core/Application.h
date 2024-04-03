@@ -1,82 +1,54 @@
 #pragma once
 #include <3DEngine/Core/core.h>
-#include <3DEngine/Core/Layer.h>
-#include <vector>
-#include <memory>
-#include <imgui/imgui.h>
-#include <vulkan/vulkan.h>
-#include <functional>
+#include <string>
+#include <cassert>
 #include <3DEngine/interfaces/Window.h>
-#include <3DEngine/Events/Event.h>
-#include <3DEngine/Events/AppEvent.h>
 #include <3DEngine/Core/LayerStack.h>
 
-struct GLFWwindow;
 namespace Engine3D{
+    struct ApplicationCommandLineArgs{
+        int count = 0;
+        char** args = nullptr;
 
-    struct ApplicationSpecification{
-        std::string name = "MiniEngine";
-        uint32_t width = 1600;
-        uint32_t height = 900;
+        const char* operator[](int index) const {
+            assert(index < count);
+            return args[index];
+        }
     };
 
-    class ENGINE_API Application{
+    class Application{
     public:
-        Application(const ApplicationSpecification& specification = ApplicationSpecification());
-        ~Application();
+        Application(const std::string& name = "Engine3D", ApplicationCommandLineArgs args = ApplicationCommandLineArgs());
 
-        static Application& Get() { return *instance; }
+        //! @note Client-functions that will be called to this specific instance.
+        template<typename T>
+        void pushLayer(){
+            static_assert(std::is_base_of<Layer, T>::value, "Pushed type is not a layer which means it is invalid!");
+            T* layer = new T();
+            layer->onAttach();
+            layerStack.pushLayer(layer);
+        }
+
+        void setMenuCallback(const std::function<void()>& callback){}
+
+        static Application& Get();
+
+        void onUpdate();
+        void onEvent(Event& event);
 
         void Run();
 
-        void setMenuCallback(const std::function<void()>& menuBarCallback){
-            _menuBarCallback = menuBarCallback;
-        }
+        void* getNativeWindow();
 
-        void pushLayer(Layer* layer){
-            layerStack.pushLayer(layer);
-            layer->onAttach();
-        }
-
-        template<typename T>
-        void pushLayer(){
-            static_assert(std::is_base_of<Layer, T>::value, "Pushed type was not a layer");
-            // layerStack.emplace_back(Ref<T>())->onAttach();
-            layerStack.pushLayer(new T());
-        }
-        
         void close();
-
-        // float getTime();
-
-        GLFWwindow* getNativeWindow() const { return (GLFWwindow *)window->getNativeWindow(); }
-
-        // static VkInstance GetInstance();
-		// static VkPhysicalDevice GetPhysicalDevice();
-		// static VkDevice GetDevice();
-
-		// static VkCommandBuffer GetCommandBuffer(bool begin);
-		// static void FlushCommandBuffer(VkCommandBuffer commandBuffer);
-
-        // static void submitResourceFree(std::function<void()>&& func);
-
-        void onEvent(Event& event);
-
-    private:
-        bool onWindowClose(WindowClosedEvent& e);
 
     private:
         static Application* instance;
-        ApplicationSpecification _specifications;
-        Ref<Window> window;
-        bool isRunning = false;
-        float m_TimeStep = 0.0f;
-		float m_FrameTime = 0.0f;
-		float m_LastFrameTime = 0.0f;
+        Ref<Window> windowHandler;
 
-        // std::vector<std::shared_ptr<Layer>> _layerStack;
+        bool isAppRunning = false;
         LayerStack layerStack;
-        std::function<void()> _menuBarCallback;
+        float lastFrameTime;
     };
 
     Application* CreateApplication(int argc, char** argv);

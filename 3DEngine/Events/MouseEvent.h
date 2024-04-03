@@ -1,4 +1,5 @@
 #pragma once
+#include <3DEngine/Core/core.h>
 #include <3DEngine/Events/Event.h>
 #include <3DEngine/Events/InputPoll.h>
 #include <3DEngine/Events/MouseButtonCodes.h>
