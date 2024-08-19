@@ -27,20 +27,17 @@ public:
 	}
 
 	virtual void onUIRender() override {
-	// 	ImGui::Begin("Settings");
+		// ImGui::Begin("Settings");
 
-	// 	ImGui::End();
+		// ImGui::End();
 	}
 };
 
 Engine3D::Application* Engine3D::CreateApplication(int argc, char** argv){
-	// Engine3D::ApplicationSpecification spec;
-	// spec.name = "Engine3D Example";
-	// spec.width = 1900;
-	// spec.height = 900;
 
 	Engine3D::Application* app = new Engine3D::Application();
-	app->pushLayer<ExampleLayer>();
+	app->push<ExampleLayer>();
+
 	app->setMenuCallback([app](){
 		if (ImGui::BeginMenu("File")){
 			if (ImGui::MenuItem("Exit")){

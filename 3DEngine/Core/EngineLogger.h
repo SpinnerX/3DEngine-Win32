@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 #include <memory>
 #include <3DEngine/Core/core.h>
 #include <spdlog/spdlog.h>

@@ -1,4 +1,4 @@
-#include <3DEngine/interfaces/Window.h>
+#include <3DEngine/Core/Window.h>
 #include <3DEngine/Core/EngineLogger.h>
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
@@ -31,7 +31,6 @@ namespace Engine3D{
     }
 
     void Window::onEvent(Event& event) {
-        glfwPollEvents();
     }
 
     Window* Window::create(const WindowProperties& properties){
